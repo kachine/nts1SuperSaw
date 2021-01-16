@@ -18,7 +18,7 @@ If you use pre-built binary, logue-sdk is not required. Simply transfer [SuperSa
 ## How to build
 You have to change PLATFORMDIR variable in Makefile, it should correspond to where you installed logue-sdk (something like below).
 ```Makefile
-PLATFORMDIR = $(PATHTO}/logue-sdk/platform/nutekt-digital
+PLATFORMDIR = ${PATHTO}/logue-sdk/platform/nutekt-digital
 ```
 
 Then, simply type "make" to build this project.
@@ -30,10 +30,12 @@ $ make
 ## How to use
 There are 2 paramters for this oscillator:
 - Detune
+
 This parameter controls the detune amount. Actual detune amount varies nonlinear like JP8k.
 Mapped to OSC mode A knob(SHPE) and MIDI CC#54
 
 - Mix
+
 This parameter controls the mix amount of sideband saw waves. Actual mix amount varies nonlinear like JP8k.
 Mapped to OSC mode B knob(ALT) and MIDI CC#55
 
