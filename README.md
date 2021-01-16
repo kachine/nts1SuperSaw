@@ -12,7 +12,7 @@ Swedish Royal Institute of Technology, Bachelor's Thesis "How to Emulate the Sup
 ## Prerequisite
 [logue-sdk](https://github.com/korginc/logue-sdk)
 
-If you use pre-built binary, logue-sdk is not required. Simply transfer **SuperSaw.ntkdigunit** to your NTS-1 using NTS-1 digital Librarian software.
+If you use pre-built binary, logue-sdk is not required. Simply transfer [SuperSaw.ntkdigunit](https://github.com/kachine/nts1SuperSaw/raw/main/SuperSaw.ntkdigunit) to your NTS-1 using NTS-1 digital Librarian software.
 
 
 ## How to build
