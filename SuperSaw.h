@@ -38,7 +38,7 @@ float conv_detune(float linearDetuneValue);
 float conv_mix_basetone(float linearMixValue);
 float conv_mix_overtone(float linearMixValue);
 float calc_agc_coeff(void);
-float osc_supersaw(uint8_t notenumber);
+float osc_supersaw(uint8_t notenumber, uint8_t pitchmodifier);
 void OSC_INIT(uint32_t platform, uint32_t api);
 void OSC_CYCLE(const user_osc_param_t * const params,
                int32_t *yn,

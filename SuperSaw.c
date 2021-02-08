@@ -30,16 +30,15 @@ float calc_agc_coeff(void){
 }
 
 // SuperSaw oscillator
-float osc_supersaw(uint8_t notenumber){
+float osc_supersaw(uint8_t notenumber, uint8_t pitchmodifier){
   float sample = 0.f;
-  float baseFreq = osc_notehzf(notenumber);
 
   for(uint8_t sawId = 0; sawId < NUM_SAWS; sawId++){
     // Wave generation
     sample += osc_sawf(VOICE.phase[sawId]) * ( sawId == BASE_SAW_ID ? VOICE.mixBasetone : VOICE.mixOvertone);
     
     // Step a phase ratio
-    VOICE.phase[sawId] += baseFreq * (1.f + lutFreqRatioOffset[sawId] * VOICE.detune) / k_samplerate;
+    VOICE.phase[sawId] += osc_w0f_for_note(notenumber, pitchmodifier) * (1.f + lutFreqRatioOffset[sawId] * VOICE.detune);
     // Keep the phase ratio within 0 <= phase < 1
     VOICE.phase[sawId] -= (uint32_t) VOICE.phase[sawId];
   }
@@ -69,11 +68,17 @@ void OSC_CYCLE(const user_osc_param_t * const params,
   q31_t * __restrict y = (q31_t *)yn;
   const q31_t * y_e = y + frames;
   float sample = 0.f;
+
+  // MIDI note# and pitch modifier of current process
+  // If pitch bend message has already received, note value may be differ from actual MIDI note#
+  // Pitch modifier value takes within 0 to 255, the value indicate 1/255 of semitone
+  // The pitch modifier is always upperward, so downer pitch bend is processed as a combination of note# decrement and adequate upperward pitch modifier.
   uint8_t note = params->pitch >> 8;
+  uint8_t mod = params->pitch & 0xFF;
 
   while( y != y_e ) {
     // Generate wave
-    sample = osc_supersaw(note);
+    sample = osc_supersaw(note, mod);
     *(y++) = f32_to_q31(sample);
   }
 }
